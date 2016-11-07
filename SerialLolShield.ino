@@ -12,7 +12,7 @@ int serialBufferIndex;
 
 void setup() {
    Serial.begin(9600);
-   Serial.println('Starting...');
+   Serial.println("powering up...");
 
    resetSerialBuffer();
 }
@@ -22,9 +22,9 @@ void loop() {
    message = fetchSerialMessage();
 
    if (message[0] != '\0') {
-      Serial.print('[');
+      Serial.print("processing [");
       Serial.print(message);
-      Serial.println(']');
+      Serial.println("]");
    }
 }
 
