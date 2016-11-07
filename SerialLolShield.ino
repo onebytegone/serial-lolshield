@@ -7,7 +7,8 @@
  * Created by Ethan Smith on 2016/11/4
  */
 
-#define MESSAGE_MAX_LENGTH 9  // e.g. T 10 15 1
+#define MESSAGE_MAX_LENGTH 65
+#define FRAME_BITS_PER_LED 4
 
 #include <Charliplexing.h>  // The LoLShield library
 
@@ -71,12 +72,30 @@ void processCommand(const char* command) {
       case 'T':
          handleToggleLEDCommand(&command[1]);
          break;
+      case 'f':
+      case 'F':
+         handleFrameCommand(&command[1]);
+         break;
       case '_':
          handleAllOffCommand();
          break;
       default:
          Serial.println("invalid command");
          break;
+   }
+}
+
+void handleFrameCommand(const char* buffer) {
+   int i;
+
+   for (i = 0; i < (DISPLAY_COLS * DISPLAY_ROWS); i++) {
+      int x = i % DISPLAY_COLS,
+          y = i / DISPLAY_ROWS,
+          byteIndex = i / 2,
+          nybbleShift = i % 2 ? 0 : 4,
+          level = (buffer[byteIndex] >> nybbleShift) & 0xF;
+
+      toggleLED(x, y, level);
    }
 }
 
