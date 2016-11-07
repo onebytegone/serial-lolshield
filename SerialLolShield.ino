@@ -71,10 +71,17 @@ void processCommand(const char* command) {
       case 'T':
          handleToggleLEDCommand(&command[1]);
          break;
+      case '_':
+         handleAllOffCommand();
+         break;
       default:
          Serial.println("invalid command");
          break;
    }
+}
+
+void handleAllOffCommand() {
+   LedSign::Clear();
 }
 
 void handleToggleLEDCommand(const char* buffer) {
