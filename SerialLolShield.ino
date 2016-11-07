@@ -38,6 +38,7 @@ const char* fetchSerialMessage() {
       } else {
          serialBuffer[serialBufferIndex] = received;
          serialBufferIndex ++;
+         serialBuffer[serialBufferIndex] = '\0';
 
          // If message is longer than expected max message length,
          // return the message we have and reset the buffer.
